@@ -1,0 +1,21 @@
+# FastAPI and ASGI server
+fastapi==0.109.0
+uvicorn==0.27.0
+
+# SQLAlchemy for database ORM
+sqlalchemy==2.0.25
+
+# Database drivers (choose one based on your database)
+# For PostgreSQL:
+psycopg2-binary==2.9.9
+# For SQLite:
+# sqlite3 (included in Python standard library)
+
+# Pydantic for data validation
+pydantic==2.5.3
+
+# Optional: Alembic for database migrations
+alembic==1.13.1
+
+# Optional: Additional utilities
+python-dotenv==1.0.0  # For environment variable management

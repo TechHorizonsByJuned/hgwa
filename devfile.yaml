@@ -1,0 +1,53 @@
+schemaVersion: 2.2.2
+metadata:
+  name: hgwa
+projects:
+  - name: hgwa
+    git:
+      remotes:
+        origin: https://github.com/TechHorizonsByJuned/hgwa.git
+    clonePath: hgwa
+
+components:
+  - name: python
+    container:
+      image: registry.redhat.io/devspaces/udi-rhel9:3.18
+      volumeMounts:
+        - name: venv
+          path: /home/user/.venv
+      memoryLimit: '2Gi'
+      memoryRequest: '1Gi'
+      cpuLimit: '2'
+      cpuRequest: '1'
+      mountSources: true
+      endpoints:
+        - name: fastapi
+          targetPort: 8000  # FastAPI typically runs on port 8000
+  - name: venv
+    volume:
+      size: 1G
+
+commands:
+  - id: install-dependencies
+    exec:
+      label: "Install dependencies"
+      component: python
+      workingDir: ${PROJECTS_ROOT}/hgwa
+      commandLine: |
+        python -m venv .venv
+        source .venv/bin/activate
+        pip install --upgrade pip
+        pip install -r requirements.txt
+      group:
+        kind: build
+
+  - id: run-fastapi
+    exec:
+      label: "Run FastAPI application"
+      component: python
+      workingDir: ${PROJECTS_ROOT}/hgwa
+      commandLine: |
+        source .venv/bin/activate
+        uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+      group:
+        kind: run
