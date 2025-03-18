@@ -19,3 +19,5 @@ alembic==1.13.1
 
 # Optional: Additional utilities
 python-dotenv==1.0.0  # For environment variable management
+
+debugpy>=1.6.0

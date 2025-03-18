@@ -51,3 +51,14 @@ commands:
         uvicorn main:app --host 0.0.0.0 --port 8000 --reload
       group:
         kind: run
+
+  - id: debug-fastapi
+    exec:
+      label: "Debug FastAPI application"
+      component: python
+      workingDir: ${PROJECTS_ROOT}/hgwa
+      commandLine: |
+        source .venv/bin/activate
+        python -m debugpy --listen 0.0.0.0:5678 -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+      group:
+        kind: debug
